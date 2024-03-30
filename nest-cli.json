@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "awdawd": {
+      "type": "library",
+      "root": "libs/awdawd",
+      "entryFile": "index",
+      "sourceRoot": "libs/awdawd/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/awdawd/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

@@ -1,0 +1,19 @@
+FROM node:18-bullseye-slim
+
+WORKDIR /usr/src/app
+
+RUN apt-get update -y \
+  && apt-get install -y openssl dumb-init \
+  && apt-get -y install procps \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY --chown=node:node ../../ ./
+
+# Run the install script 
+RUN ["sh", "./.docker/local/scripts/install.sh"]
+
+USER node
+
+ENTRYPOINT ["dumb-init", "--"]
+
+CMD ["yarn", "data:serve"]

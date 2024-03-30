@@ -1,0 +1,38 @@
+# docker-compose.yml
+
+version: '3.8'
+services:
+
+  gateway:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    build:
+      context: ./
+      dockerfile: ./.docker/local/Dockerfile.gateway
+    ports:
+      - '3000:3000'
+    restart: always
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /usr/src/app
+        - action: rebuild
+          path: package.json
+
+  data:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    build:
+      context: ./
+      dockerfile: ./.docker/local/Dockerfile.data
+    ports:
+      - '3001:3001'
+    restart: always
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /usr/src/app
+        - action: rebuild
+          path: package.json
